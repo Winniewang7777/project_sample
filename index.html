@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>⛑️ 居家防災物資紀錄表</title>
+  <!-- Link to external CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" type="image/png" href="icon.png">
+</head>
+<body>
+  <!-- ==========================
+       APP HEADER
+       ========================== -->
+  <header class="app-header">
+    <h1>⛑️ 居家防災物資紀錄表</h1>
+    <p class="subtitle">保持防災包可用：自動計算剩餘天數、集中提醒與排序</p>
+  </header>
+
+  <!-- ==========================
+       LAYOUT: 左側儀表板（1/3） 右側內容（2/3）
+       ========================== -->
+  <main class="container">
+    <!-- ---------- 左側：儀表板 + 快要過期區（1/3） ---------- -->
+    <aside class="left-panel" aria-label="儀表板">
+      <!-- Dashboard card -->
+      <section class="card dashboard-card">
+        <h2>儀表板</h2>
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-number" id="total-count">—</div>
+            <div class="stat-label">總項目</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number green" id="safe-count">—</div>
+            <div class="stat-label">安全 (≥90 天)</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number yellow" id="soon-count">—</div>
+            <div class="stat-label">即將到期 (31–89)</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number red" id="expired-count">—</div>
+            <div class="stat-label">過期 / ≤30</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Urgent list card -->
+      <section class="card urgent-card">
+        <h2>📌 注意! 即將過期物品</h2>
+        <div id="urgent-list">
+          <!-- JS will inject items here -->
+        </div>
+        <button id="refresh-btn" class="btn">重新整理</button>
+      </section>
+    </aside>
+
+    <!-- ---------- 右側：物品清單（2/3） ---------- -->
+    <section class="right-panel" aria-label="物品清單">
+      <!-- Controls -->
+      <div class="controls">
+        <label for="sort-select">排序方式：</label>
+        <select id="sort-select">
+          <option value="category">類別排序（預設）</option>
+          <option value="expiry">到期日排序</option>
+          <option value="id">編號順序</option>
+        </select>
+        <label for="filter-select">類別篩選：</label>
+        <select id="filter-select">
+          <option value="all">全部</option>
+          <option value="食物">食物</option>
+          <option value="飲水">飲水</option>
+          <option value="藥品">藥品</option>
+          <option value="防護">防護</option>
+          <option value="衛生">衛生</option>
+          <option value="照明">照明</option>
+          <option value="工具">工具</option>
+          <option value="其他">其他</option>
+        </select>
+        <div class="spacer"></div>
+        <div class="legend">
+          <span class="legend-dot green"></span> ≥90
+          <span class="legend-dot yellow"></span> 31–89
+          <span class="legend-dot red"></span> ≤30 / 過期
+        </div>
+      </div>
+
+      <!-- List area: split into two columns inside -->
+      <div class="list-grid">
+        <div class="list-column" id="list-col-left"></div>
+        <div class="list-column" id="list-col-right"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer / credits -->
+  <footer class="app-footer">
+    <small>資料來源：Google Sheet（公開 CSV） • 本工具不會寫入 Google Sheet</small>
+  </footer>
+
+  <!-- ==========================
+       App JS
+       ========================== -->
+  <script src="app.js"></script>
+</body>
+</html>
